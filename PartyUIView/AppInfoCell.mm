@@ -30,7 +30,8 @@
     
     // โหลดไอคอนแอปเริ่มต้น ถ้าไม่มีให้ใช้ระบบ Questionmark Square เป็น Placeholder
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
-    NSString *iconName = [[[infoPlist objectForKey:@"CFBundleIcons"] objectForKey:@"CFBundlePrimaryIcon"] objectForKey:@"CFBundleIconFiles"].lastObject;
+    NSArray *iconFiles = [[[infoPlist objectForKey:@"CFBundleIcons"] objectForKey:@"CFBundlePrimaryIcon"] objectForKey:@"CFBundleIconFiles"];
+NSString *iconName = [iconFiles lastObject];
     UIImage *appIcon = [UIImage imageNamed:iconName];
     
     if (appIcon) {
