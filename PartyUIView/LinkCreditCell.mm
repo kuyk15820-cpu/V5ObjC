@@ -49,7 +49,9 @@
     // 3. Setup Chevron (ลูกศรชี้ขวา)
     self.chevronImageView = [[UIImageView alloc] init];
     // ใช้ UIImageSymbolConfiguration เพื่อให้ได้ความหนาแบบ Semibold และขนาด Small ตาม SwiftUI
-    UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:14 weight:UIImageFontWeightSemibold scale:UIImageSymbolScaleSmall];
+    UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:14 
+                                                                                     weight:UIImageSymbolWeightSemibold 
+                                                                                      scale:UIImageSymbolScaleSmall];
     self.chevronImageView.image = [UIImage systemImageNamed:@"chevron.right" withConfiguration:config];
     self.chevronImageView.tintColor = [UIColor tertiaryLabelColor];
     self.chevronImageView.translatesAutoresizingMaskIntoConstraints = NO;
