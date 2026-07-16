@@ -3,6 +3,7 @@
 #import <PhotosUI/PhotosUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "obfuscate.h"
+#import "SettingsViewController.h"
 
 @interface RootViewController () <UITableViewDelegate, UITableViewDataSource, PHPickerViewControllerDelegate>
 
@@ -57,28 +58,15 @@
     [self setupSpinner];
     
     // --- สั่งอุ่นเครื่อง (Warm-up) หน้า SettingsView รอไว้เงียบ ๆ ทันทีเมื่อเข้าหน้านี้ ---
-    Class presenterClass = NSClassFromString(@"SettingsViewPresenter");
-    if (presenterClass) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [presenterClass performSelector:@selector(warmUp)];
-        #pragma clang diagnostic pop
-    }
 }
 
 // Action เมื่อผู้ใช้แตะปุ่ม Info ขวาบน
 - (void)infoButtonTapped {
-    // ดึงคลาสเชื่อมต่อจากฝั่ง Swift เพื่อทำการเปิดหน้า SettingsView (SwiftUI)
-    Class presenterClass = NSClassFromString(@"SettingsViewPresenter");
-    if (presenterClass) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [presenterClass performSelector:@selector(presentSettingsFromViewController:) withObject:self];
-        #pragma clang diagnostic pop
-    } else {
-        // Fallback เผื่อกรณีหาคลาสเชื่อมต่อไม่เจอ ให้แสดง Alert แบบเดิมเพื่อความปลอดภัย
-        [self showStatusAlert:[NSString stringWithUTF8String:AY_OBFUSCATE("TT-Tool Version 1.0\nDeveloped with security protection.")]];
-    }
+    // เรียกใช้โดยตรงผ่านคลาสที่ import .h เข้ามา
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+    navController.modalPresentationStyle = UIModalPresentationAutomatic;
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)setupData {
